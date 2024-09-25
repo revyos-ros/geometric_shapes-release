@@ -1,4 +1,4 @@
-release_repo_url: git@github.com:revyos-ros/geometric_shapes-release
+release_repo_url: git@github.com:revyos-ros/geometric_shapes-release.git
 tracks:
   foxy:
     actions:
