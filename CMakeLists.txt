@@ -52,6 +52,7 @@ find_package(rclcpp REQUIRED)
 find_package(resource_retriever REQUIRED)
 find_package(shape_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
+find_package(fcl REQUIRED)
 include(ConfigExtras)
 
 set(THIS_PACKAGE_EXPORT_DEPENDS
@@ -73,13 +74,12 @@ set(THIS_PACKAGE_EXPORT_DEPENDS
 # Set VERSION from package.xml
 ament_package_xml()
 
-include_directories(include)
-
 add_library(${PROJECT_NAME} SHARED
   src/aabb.cpp
   src/bodies.cpp
   src/body_operations.cpp
   src/mesh_operations.cpp
+  src/obb.cpp
   src/shape_extents.cpp
   src/shape_operations.cpp
   src/shape_to_marker.cpp
@@ -87,14 +87,15 @@ add_library(${PROJECT_NAME} SHARED
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${${PROJECT_NAME}_VERSION} WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 target_compile_options(${PROJECT_NAME} PRIVATE ${PROJECT_COMPILE_OPTIONS})
-ament_target_dependencies(${PROJECT_NAME}
+target_include_directories(${PROJECT_NAME}
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+           $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+ament_target_dependencies(${PROJECT_NAME} PUBLIC
   ${THIS_PACKAGE_EXPORT_DEPENDS}
 )
-ament_target_dependencies(${PROJECT_NAME} SYSTEM
-  # We don't export these dependencies because their cmake is broken
-  assimp
-  QHULL
-)
+# Private libraries that are not transitively needed by downstream projects
+target_link_libraries(${PROJECT_NAME} PRIVATE assimp::assimp fcl ${QHULL_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${QHULL_INCLUDE_DIRS})
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
@@ -114,7 +115,7 @@ install(
   RUNTIME DESTINATION bin
   INCLUDES DESTINATION include
 )
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_EXPORT_DEPENDS})
