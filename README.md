@@ -1,3 +1,26 @@
+## geometric_shapes (humble) - 2.3.2-1
+
+The packages in the `geometric_shapes` repository were released into the `humble` distro by running `/home/z572/gits/revyos-ros/venv2/bin/bloom-release -r humble geometric_shapes --override-release-repository-push-url git@github.com:revyos-ros/geometric_shapes-release.git` on `Mon, 17 Feb 2025 01:35:11 -0000`
+
+The `geometric_shapes` package was released.
+
+Version of package(s) in repository `geometric_shapes`:
+
+- upstream repository: https://github.com/ros-planning/geometric_shapes.git
+- release repository: https://github.com/revyos-ros/geometric_shapes-release.git
+- rosdistro version: `2.3.2-1`
+- old version: `2.3.1-1`
+- new version: `2.3.2-1`
+
+Versions of tools used:
+
+- bloom version: `0.12.0`
+- catkin_pkg version: `1.0.0`
+- rosdep version: `0.22.2`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## geometric_shapes (jazzy) - 2.3.1-1
 
 The packages in the `geometric_shapes` repository were released into the `jazzy` distro by running `/home/z572/gits/revyos-ros/venv2/bin/bloom-release -r jazzy geometric_shapes --override-release-repository-push-url git@github.com:revyos-ros/geometric_shapes-release.git` on `Thu, 19 Dec 2024 12:36:56 -0000`
